@@ -17,9 +17,7 @@ const cartCount = document.getElementById('cart-count');
 let currentUser = null;
 let cart = [];
 
-/* ---------------------------
-   USER DROPDOWN HANDLING
---------------------------- */
+/* -----USER DROPDOWN HANDLING------- */
 userDropdownToggle.addEventListener('click', e => {
   e.preventDefault();
   userDropdown.classList.toggle('show');
@@ -31,9 +29,7 @@ document.addEventListener('click', e => {
   }
 });
 
-/* ---------------------------
-   AUTH (Still functional if needed)
---------------------------- */
+/* -----AUTH (Still functional if needed)-------- */
 loginForm.addEventListener('submit', function (e) {
   e.preventDefault();
   const email = this.querySelector('input[type="email"]').value;
@@ -81,10 +77,8 @@ function updateUserUI() {
   userDropdown.classList.remove('show');
 }
 
-/* ---------------------------
-   CART FUNCTIONS
---------------------------- */
-// Add to cart (✅ no login, no alerts, scrolls up)
+
+// Add to cart 
 function addToCart(productName, productPrice) {
   const existingItem = cart.find(item => item.name === productName);
 
@@ -158,16 +152,14 @@ function updateCartUI() {
   cartTotal.textContent = `₹${total.toFixed(2)}`;
 }
 
-/* ---------------------------
-   PAGE SWITCH
---------------------------- */
+//PAGE SWITCH
+
 function showPage(pageId) {
   document.querySelectorAll('.page-section').forEach(page => page.classList.remove('active'));
   document.getElementById(`${pageId}-page`).classList.add('active');
   window.scrollTo(0, 0);
 }
 
-/* ---------------------------
-   INIT
---------------------------- */
+//INIT
 document.addEventListener('DOMContentLoaded', updateCartUI);
+
