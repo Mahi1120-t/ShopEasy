@@ -20,6 +20,31 @@
     }
     
     /* Header Styles */
+    .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 12px;
+            font-weight: bold;
+            color: #4361ee;
+            font-size: 22px;
+        }
+        
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+        }
     .navbar {
       background-color: var(--primary-blue);
       padding: 0.5rem 1rem;

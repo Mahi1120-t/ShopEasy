@@ -66,6 +66,10 @@ logoutBtn.addEventListener('click', e => {
   updateUserUI();
 });
 
+function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("active");
+  } 
+  
 function updateUserUI() {
   if (currentUser) {
     userText.textContent = currentUser.name;
