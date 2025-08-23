@@ -90,9 +90,6 @@ function addToCart(productName, productPrice) {
 
   updateCartUI();
 
-  // Scroll to top after adding
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
 
 // Remove from cart
 function removeFromCart(productName) {
@@ -162,4 +159,5 @@ function showPage(pageId) {
 
 //INIT
 document.addEventListener('DOMContentLoaded', updateCartUI);
+
 
