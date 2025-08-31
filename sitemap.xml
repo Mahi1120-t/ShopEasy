@@ -1,38 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage -->
-  <url>
-    <loc>https://shopeasy-by-mahi.vercel.app/</loc>
-    <lastmod>2025-08-24T12:37:13+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <!-- About Page -->
-  <url>
-    <loc>https://shopeasy-by-mahi.vercel.app/about</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Products Page -->
-  <url>
-    <loc>https://shopeasy-by-mahi.vercel.app/products</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Cart Page -->
-  <url>
-    <loc>https://shopeasy-by-mahi.vercel.app/cart</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Contact Page -->
-  <url>
-    <loc>https://shopeasy-by-mahi.vercel.app/contact</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!--  created with Free Online Sitemap Generator www.xml-sitemaps.com  -->
+<url>
+<loc>https://shopeasy-by-mahi.vercel.app/</loc>
+<lastmod>2025-08-31T16:30:13+00:00</lastmod>
+</url>
 </urlset>
