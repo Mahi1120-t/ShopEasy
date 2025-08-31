@@ -1,4 +1,2 @@
-User-agent: *
-Allow: /
 
-Sitemap: https://shopeasy-by-mahi.vercel.app/sitemap.xml
+
