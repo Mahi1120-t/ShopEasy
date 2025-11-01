@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Payment Failed - Shopzy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f8d7da;
+      }
+      .failed-container {
+        max-width: 600px;
+        margin: 100px auto;
+        text-align: center;
+        background: #fff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border-top: 8px solid #dc3545;
+      }
+      .failed-icon {
+        font-size: 70px;
+        color: #dc3545;
+        margin-bottom: 20px;
+        animation: shake 0.8s;
+      }
+      @keyframes shake {
+        0% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-10px);
+        }
+        50% {
+          transform: translateX(10px);
+        }
+        75% {
+          transform: translateX(-10px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+      h2 {
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #dc3545;
+      }
+      p {
+        font-size: 16px;
+        color: #555;
+      }
+      .btn-try {
+        margin-top: 30px;
+        padding: 12px 30px;
+        font-size: 16px;
+        border-radius: 8px;
+        background: #dc3545;
+        color: #fff;
+        border: none;
+        transition: 0.3s;
+      }
+      .btn-try:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(220, 53, 69, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="failed-container">
+      <div class="failed-icon">
+        <i class="fas fa-times-circle"></i>
+      </div>
+      <h2>❌ Payment Failed</h2>
+      <p>Unfortunately, your transaction was not successful.</p>
+      <p>Please try again or use a different payment method.</p>
+      <a href="/shop/checkout/" class="btn-try"
+        ><i class="fas fa-redo"></i> Try Again</a
+      >
+    </div>
+  </body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopzy</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+    crossorigin="anonymous" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  {% extends 'shop/basic.html' %}
+  {% load static %}
+  {% block title %}Shopzy{% endblock %}
+
+  {% block css %}
+  <style>
+    .carousel-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .col-md-3 {
+      display: inline-block;
+      margin-left: -4px;
+    }
+
+    .carousel-indicators .active {
+      background-color: #28a745;
+    }
+
+    .carousel-indicators li {
+      background-color: blue;
+    }
+
+    .carousel-indicators {
+      bottom: 0;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: blue;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+      top: auto;
+      bottom: auto;
+      padding-top: 222px;
+    }
+
+    .col-md-3 img {
+      width: 277px;
+      max-height: 242px;
+    }
+
+    .no-padding {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    /* Add/remove from cart buttons */
+    .btn.btn-primary.minus,
+    .btn.btn-primary.plus {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 50%;
+      padding: 0;
+    }
+
+    .qty-display {
+      font-size: 18px;
+      font-weight: bold;
+      padding: 0 10px;
+      display: inline-block;
+      min-width: 30px;
+      text-align: center;
+    }
+
+    /* Category bar */
+    .category-bar::-webkit-scrollbar { display: none; }
+    .category-item img { width: 80px; height: 80px; object-fit: contain; display: block; }
+    .category-item { transition: transform .2s; }
+    .category-item:hover { transform: scale(1.06); }
+
+    /* Ratings */
+    .rating-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .rating-badge {
+      background-color: #388e3c;
+      color: #fff;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .rating-badge i {
+      font-size: 12px;
+      margin-right: 3px;
+    }
+
+    .rating-reviews {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .badge-free {
+      background-color: #e7f8e9;
+      color: #388e3c;
+      font-weight: 500;
+      font-size: 12px;
+      border-radius: 8px;
+    }
+
+    .badge-trusted {
+      background-color: #f0ebff;
+      color: #5e35b1;
+      font-weight: 500;
+      font-size: 12px;
+      border-radius: 8px;
+    }
+
+    .product-info {
+      padding: 10px;
+    }
+
+    .product-title {
+      font-size: 14px;
+      height: 38px;
+      overflow: hidden;
+    }
+  </style>
+  {% endblock %}
+</head>
+
+<body>
+{% block body %}
+{% load static %}
+
+<!-- Categories -->
+<div class="category-bar d-flex align-items-center justify-content-center flex-nowrap overflow-auto bg-white py-3">
+  <div class="category-item text-center mx-3">
+    <a href="{% url 'category_products' 'Groceries' %}">
+      <img src="https://rukminim1.flixcart.com/flap/128/128/image/29327f40e9c4d26b.png" alt="Groceries">
+      <p>Groceries</p>
+    </a>
+  </div>
+  <div class="category-item text-center mx-3">
+    <a href="{% url 'category_products' 'Mobiles' %}">
+      <img src="https://rukminim1.flixcart.com/flap/128/128/image/22fddf3c7da4c4f4.png" alt="Mobiles">
+      <p>Mobiles</p>
+    </a>
+  </div>
+  <div class="category-item text-center mx-3">
+    <a href="{% url 'category_products' 'Fashion' %}">
+      <img src="https://rukminim1.flixcart.com/flap/128/128/image/c12afc017e6f24cb.png" alt="Fashion">
+      <p>Fashion</p>
+    </a>
+  </div>
+  <div class="category-item text-center mx-3">
+    <a href="{% url 'category_products' 'Electronics' %}">
+      <img src="https://rukminim1.flixcart.com/flap/128/128/image/69c6589653afdb9a.png" alt="Electronics">
+      <p>Electronics</p>
+    </a>
+  </div>
+  <div class="category-item text-center mx-3">
+    <a href="{% url 'category_products' 'Home & Furniture' %}">
+      <img src="https://rukminim1.flixcart.com/flap/128/128/image/ab7e2b022a4587dd.jpg" alt="Home">
+      <p>Home & Furniture</p>
+    </a>
+  </div>
+  <div class="category-item text-center mx-3">
+    <a href="{% url 'category_products' 'Appliances' %}">
+      <img src="https://rukminim1.flixcart.com/flap/128/128/image/0ff199d1bd27eb98.png" alt="Appliances">
+      <p>Appliances</p>
+    </a>
+  </div>
+  <div class="category-item text-center mx-3">
+    <a href="{% url 'category_products' 'Books & More' %}">
+      <img src="https://rukminim1.flixcart.com/flap/128/128/image/71050627a56b4693.png" alt="Books">
+      <p>Books & More</p>
+    </a>
+  </div>
+  <div class="category-item text-center mx-3">
+    <a href="{% url 'category_products' 'Beauty, Toys & More' %}">
+      <img src="https://rukminim1.flixcart.com/flap/128/128/image/dff3f7adcf3a90c6.png" alt="Beauty">
+      <p>Beauty, Toys & More</p>
+    </a>
+  </div>
+</div>
+
+<!-- Products Section -->
+<div class="container mt-4">
+  {% for product, range, nSlides in allProds %}
+    <div class="row">
+      {% for i in product %}
+        <div class="col-xs-12 col-sm-6 col-md-3 mb-4">
+          <div class="card align-items-center">
+            <div class="product-image-container">
+              <img src="/media/{{ i.image }}" class="card-img-top" alt="{{ i.product_name }}" />
+            </div>
+            <div class="product-info text-center p-2">
+              <h6 class="product-title mb-1">{{ i.product_name|truncatechars:20 }}</h6>
+              <p class="text-success font-weight-bold mb-1">₹{{ i.price }}</p>
+
+              <!-- Rating Section -->
+              <div class="rating-box mb-2">
+                <span class="rating-badge">
+                  <i class="fa fa-star"></i> {{ i.rating|default:"4.2" }}
+                </span>
+                
+                {% if i.rating|default:4.2 >= 4.0 %}
+                <span class="ml-2 badge badge-trusted">Trusted</span>
+                {% endif %}
+              </div>
+
+              <span id="divpr{{ i.id }}">
+                <a href="{% url 'add-to-cart' i.id %}" class="btn btn-primary btn-sm px-3">Add to Cart</a>
+                <a href="/shop/products/{{ i.id }}">
+                  <button id="qv{{ i.id }}" class="btn btn-outline-primary btn-sm my-2 px-3">Quick View</button>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>
+
+<footer class="text-center mt-4 py-4 border-top">
+  <p>&copy; 2025 Shopzy. All rights reserved.</p>
+</footer>
+{% endblock %}
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% block js %}
+<script>
+$(document).ready(function () {
+  $('#cart-count').text({{ request.session.cart|length|default:0 }});
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+  integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+  crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+  integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+  crossorigin="anonymous"></script>
+{% endblock %}
+</body>
+</html>

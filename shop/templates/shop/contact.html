@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+      .display-font {
+        font-family: "Playfair Display", serif;
+      }
+      .gradient-bg {
+        background: linear-gradient(120deg, #4f46e5 0%, #7c3aed 100%);
+      }
+      .gradient-text {
+        background: linear-gradient(120deg, #4f46e5 0%, #7c3aed 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .pattern-bg {
+        background-color: #f9fafb;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234f46e5' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      .input-focus:focus {
+        border-color: #7c3aed;
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+      }
+    </style>
+  </head>
+  <body class="pattern-bg text-gray-800 min-h-screen">
+    <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8 max-w-6xl">
+      <!-- Header Section -->
+      <header class="text-center mb-16">
+        <h1 class="display-font text-4xl md:text-5xl font-bold mb-6">
+          Get In <span class="gradient-text">Touch</span>
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Have questions or want to get in touch? We'd love to hear from you.
+          Send us a message and we'll respond as soon as possible.
+        </p>
+      </header>
+
+      <div class="grid md:grid-cols-2 gap-12 mb-20">
+        <!-- Contact Form -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 card-hover">
+          <h2 class="display-font text-2xl font-bold text-gray-800 mb-6">
+            Send Us a Message
+          </h2>
+          <form>
+            <div class="mb-6">
+              <label for="name" class="block text-gray-700 font-medium mb-2"
+                >Your Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none input-focus"
+                placeholder="John Doe"
+              />
+            </div>
+            <div class="mb-6">
+              <label for="email" class="block text-gray-700 font-medium mb-2"
+                >Email Address</label
+              >
+              <input
+                type="email"
+                id="email"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none input-focus"
+                placeholder="john@example.com"
+              />
+            </div>
+            <div class="mb-6">
+              <label for="subject" class="block text-gray-700 font-medium mb-2"
+                >Subject</label
+              >
+              <input
+                type="text"
+                id="subject"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none input-focus"
+                placeholder="What is this regarding?"
+              />
+            </div>
+            <div class="mb-6">
+              <label for="message" class="block text-gray-700 font-medium mb-2"
+                >Your Message</label
+              >
+              <textarea
+                id="message"
+                rows="5"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none input-focus"
+                placeholder="Type your message here..."
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="w-full gradient-bg text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
+            >
+              Send Message <i class="fas fa-paper-plane ml-2"></i>
+            </button>
+          </form>
+        </div>
+
+        <!-- Contact Information -->
+        <div>
+          <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
+            <h2 class="display-font text-2xl font-bold text-gray-800 mb-6">
+              Contact Information
+            </h2>
+
+            <div class="space-y-6">
+              <div class="flex items-start">
+                <div class="flex-shrink-0">
+                  <div
+                    class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 text-indigo-600"
+                  >
+                    <i class="fas fa-map-marker-alt"></i>
+                  </div>
+                </div>
+                <div class="ml-4">
+                  <h3 class="text-lg font-semibold text-gray-800">Address</h3>
+                  <p class="text-gray-600">
+                    123 Commerce Street, Suite 101<br />San Francisco, CA 94102
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="flex-shrink-0">
+                  <div
+                    class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 text-indigo-600"
+                  >
+                    <i class="fas fa-phone"></i>
+                  </div>
+                </div>
+                <div class="ml-4">
+                  <h3 class="text-lg font-semibold text-gray-800">Phone</h3>
+                  <p class="text-gray-600">+1 (555) 123-4567</p>
+                  <p class="text-gray-600">+1 (555) 987-6543</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="flex-shrink-0">
+                  <div
+                    class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 text-indigo-600"
+                  >
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                </div>
+                <div class="ml-4">
+                  <h3 class="text-lg font-semibold text-gray-800">Email</h3>
+                  <p class="text-gray-600">hello@yourcompany.com</p>
+                  <p class="text-gray-600">support@yourcompany.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Media -->
+          <div class="bg-white rounded-2xl shadow-lg p-8 card-hover">
+            <h2 class="display-font text-2xl font-bold text-gray-800 mb-6">
+              Follow Us
+            </h2>
+            <p class="text-gray-600 mb-6">
+              Stay connected with us on social media for updates, news, and
+              more.
+            </p>
+
+            <div class="flex space-x-4">
+              <a
+                href="https://github.com/Mahi1120-t"
+                class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300"
+              >
+                <i class="fab fa-github"></i>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/mahi-trivedi-3ba654327/"
+                class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a
+                href="https://instagram.com/_trivedi_1110"
+                class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a
+                href="https://in.pinterest.com/mahitrivedi1120/"
+                class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300"
+              >
+                <i class="fab fa-pinterest"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="mb-20">
+        <h2
+          class="display-font text-3xl font-bold text-center text-gray-800 mb-4"
+        >
+          Frequently Asked Questions
+        </h2>
+        <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+          Find quick answers to common questions about our products and services
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-white p-6 rounded-xl card-hover">
+            <h3
+              class="text-xl font-semibold text-gray-800 mb-3 flex items-center"
+            >
+              <i class="fas fa-question-circle text-indigo-600 mr-3"></i> What
+              are your shipping options?
+            </h3>
+            <p class="text-gray-600">
+              We offer standard shipping (3-5 business days), express shipping
+              (2-3 business days), and overnight shipping. Shipping costs vary
+              based on your location and the option selected.
+            </p>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl card-hover">
+            <h3
+              class="text-xl font-semibold text-gray-800 mb-3 flex items-center"
+            >
+              <i class="fas fa-question-circle text-indigo-600 mr-3"></i> What
+              is your return policy?
+            </h3>
+            <p class="text-gray-600">
+              We offer a 30-day return policy for all unused items in their
+              original packaging. Returns are free for Indian customers.
+              International returns may be subject to shipping fees.
+            </p>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl card-hover">
+            <h3
+              class="text-xl font-semibold text-gray-800 mb-3 flex items-center"
+            >
+              <i class="fas fa-question-circle text-indigo-600 mr-3"></i> How
+              can I track my order?
+            </h3>
+            <p class="text-gray-600">
+              Once your order ships, you'll receive a confirmation email with a
+              tracking number. You can also track your order by logging into
+              your account on our website.
+            </p>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl card-hover">
+            <h3
+              class="text-xl font-semibold text-gray-800 mb-3 flex items-center"
+            >
+              <i class="fas fa-question-circle text-indigo-600 mr-3"></i> Do you
+              offer international shipping?
+            </h3>
+            <p class="text-gray-600">
+              Yes, we ship to over 50 countries worldwide. International
+              shipping rates and delivery times vary based on the destination.
+              Customs fees may apply for international orders.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Map Section -->
+      <section class="bg-white rounded-2xl shadow-lg p-8 mb-16 card-hover">
+        <h2 class="display-font text-2xl font-bold text-gray-800 mb-6">
+          Find Us Here
+        </h2>
+        <div
+          class="bg-gray-200 h-64 rounded-lg flex items-center justify-center"
+        >
+          <div class="text-center">
+            <i class="fas fa-map-marked-alt text-4xl text-indigo-600 mb-3"></i>
+            <p class="text-gray-600">Interactive map would be displayed here</p>
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=23.0225,72.5714"
+              target="_blank"
+              class="mt-4 inline-block gradient-bg text-white font-bold py-2 px-6 rounded-lg"
+            >
+              Get Directions <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // Simple form validation
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const subject = document.getElementById("subject").value;
+          const message = document.getElementById("message").value;
+
+          if (name && email && subject && message) {
+            // Simulate form submission success
+            alert("Thank you for your message! We will get back to you soon.");
+            form.reset();
+          } else {
+            alert("Please fill in all fields.");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

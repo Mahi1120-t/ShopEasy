@@ -1,0 +1,86 @@
+{% extends "shop/basic.html" %} {% load static %} {% block body %}
+<div class="container mt-5">
+  <h2 class="mb-4">Your Shopping Cart</h2>
+
+  {% if cart_items %}
+  <div class="table-responsive">
+    <table class="table table-bordered text-center">
+      <thead class="thead-light">
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart_items %}
+        <tr>
+          <td class="text-left">
+            <img
+              src="{{ item.product.image.url }}"
+              alt="{{ item.product.product_name }}"
+              style="
+                width: 60px;
+                height: 60px;
+                object-fit: cover;
+                margin-right: 10px;
+              "
+            />
+            {{ item.product.product_name }}
+          </td>
+          <td>₹{{ item.product.price|floatformat:2 }}</td>
+          <td>
+            <div class="d-flex justify-content-center align-items-center">
+              <a
+                href="{% url 'DecreaseQty' item.product.id %}"
+                class="btn btn-sm btn-outline-secondary"
+                >-</a
+              >
+              <span class="mx-2">{{ item.quantity }}</span>
+              <a
+                href="{% url 'IncreaseQty' item.product.id %}"
+                class="btn btn-sm btn-outline-secondary"
+                >+</a
+              >
+            </div>
+          </td>
+          <td><strong>₹{{ item.total_price|floatformat:2 }}</strong></td>
+          <td>
+            <a
+              href="{% url 'RemoveFromCart' item.product.id %}"
+              class="btn btn-sm btn-danger"
+              >Remove</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <a href="{% url 'ShopHome' %}" class="btn btn-primary">Go to Shopping</a>
+    </div>
+    <div class="col-md-6">
+      <div class="p-3 border rounded bg-light">
+        <h5>Order Summary</h5>
+        <p>Subtotal: ₹{{ total|floatformat:2 }}</p>
+        <p>GST (18%): ₹{{ gst|floatformat:2 }}</p>
+        <p>Shipping: {{ shipping }}</p>
+        <hr />
+        <h5>Total: ₹{{ final_total|floatformat:2 }}</h5>
+
+        <a href="{% url 'Checkout' %}" class="btn btn-success btn-block mt-3"
+          >Proceed to Checkout</a
+        >
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p>Your cart is empty. <a href="{% url 'ShopHome' %}">Go shopping now!</a></p>
+  {% endif %}
+</div>
+{% endblock %}

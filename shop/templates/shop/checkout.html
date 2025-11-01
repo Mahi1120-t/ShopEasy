@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout - Shopzy</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+  <style>
+    /* ============ GENERAL PAGE STYLE ============ */
+    body {
+      background: #f8f9fa;
+      font-family: "Poppins", sans-serif;
+      color: #333;
+    }
+
+    .checkout-container {
+      max-width: 900px;
+      margin: 50px auto;
+    }
+
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #007bff, #6610f2);
+      color: #fff;
+      font-weight: 500;
+      border-radius: 15px 15px 0 0;
+    }
+
+    .section-title {
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #444;
+    }
+
+    .checkout-section {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .checkout-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============ STEP INDICATOR ============ */
+    .steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+
+    .step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+
+    .step:before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      background-color: #ddd;
+      top: 20px;
+      left: -50%;
+      z-index: -1;
+    }
+
+    .step:first-child:before {
+      display: none;
+    }
+
+    .step-number {
+      background-color: #ddd;
+      color: #555;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .step.active .step-number {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .step.completed .step-number {
+      background-color: #28a745;
+      color: #fff;
+    }
+
+    .step-text {
+      margin-top: 8px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    /* ============ BUTTONS ============ */
+    .btn-next, .btn-back, .btn-pay {
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 500;
+    }
+
+    .btn-next {
+      background: linear-gradient(90deg, #007bff, #6610f2);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-next:hover {
+      background: linear-gradient(90deg, #6610f2, #007bff);
+    }
+
+    .btn-back {
+      background-color: #6c757d;
+      color: #fff;
+      border: none;
+    }
+
+    .btn-back:hover {
+      background-color: #5a6268;
+    }
+
+    .btn-pay {
+      background: linear-gradient(90deg, #28a745, #20c997);
+      color: white;
+      border: none;
+      width: 100%;
+      font-size: 18px;
+    }
+
+    .btn-pay:hover {
+      background: linear-gradient(90deg, #20c997, #28a745);
+    }
+
+    .secure-notice {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #777;
+    }
+
+    .form-control {
+      border-radius: 8px;
+    }
+
+    .address-type {
+      display: inline-block;
+      padding: 8px 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: all 0.2s;
+    }
+
+    .address-type.selected {
+      border-color: #007bff;
+      background-color: #007bff;
+      color: #fff;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="checkout-container">
+    <!-- Step Indicator -->
+    <div class="steps">
+      <div class="step active" data-step="1">
+        <div class="step-number">1</div>
+        <div class="step-text">Customer Info</div>
+      </div>
+      <div class="step" data-step="2">
+        <div class="step-number">2</div>
+        <div class="step-text">Shipping</div>
+      </div>
+      <div class="step" data-step="3">
+        <div class="step-number">3</div>
+        <div class="step-text">Payment</div>
+      </div>
+    </div>
+
+    <!-- Step 1: Customer Info -->
+    <div class="checkout-section active" id="step-1">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-user"></i> Customer Information</div>
+        <div class="card-body">
+          <form id="customer-info-form">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" class="form-control" required />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" class="form-control" required />
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="email">Email</label>
+              <input type="email" id="email" class="form-control" required />
+            </div>
+            <div class="form-group mb-3">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" class="form-control" required />
+            </div>
+          </form>
+          <div class="text-right">
+            <button class="btn-next" onclick="validateCustomerForm()">Continue to Shipping</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Shipping -->
+    <div class="checkout-section" id="step-2">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-truck"></i> Shipping Address</div>
+        <div class="card-body">
+          <div class="address-type-selector mb-3">
+            <div class="address-type selected" onclick="selectAddressType(this)">Home</div>
+            <div class="address-type" onclick="selectAddressType(this)">Work</div>
+            <div class="address-type" onclick="selectAddressType(this)">Other</div>
+          </div>
+
+          <form id="shipping-address-form">
+            <div class="form-group mb-3">
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" class="form-control" required />
+            </div>
+            <div class="form-group mb-3">
+              <label for="addressLine1">Address Line 1</label>
+              <input type="text" id="addressLine1" class="form-control" required />
+            </div>
+            <div class="form-group mb-3">
+              <label for="city">City</label>
+              <input type="text" id="city" class="form-control" required />
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="state">State</label>
+                <input type="text" id="state" class="form-control" required />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="zipCode">Zip Code</label>
+                <input type="text" id="zipCode" class="form-control" required />
+              </div>
+            </div>
+          </form>
+
+          <div class="d-flex justify-content-between">
+            <button class="btn-back" onclick="goToStep(1)">Back</button>
+            <button class="btn-next" onclick="validateShippingForm()">Continue to Payment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Payment -->
+    <div class="checkout-section" id="step-3">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-credit-card"></i> Payment</div>
+        <div class="card-body text-center">
+          <p class="section-title">Pay Securely with Stripe</p>
+          <button id="checkout-button" class="btn-pay">
+            <i class="fas fa-lock"></i> Pay ₹{{ total }}
+          </button>
+          <div class="secure-notice mt-3">
+            <i class="fas fa-shield-alt"></i> Your payment is encrypted and secure.
+          </div>
+
+          <div class="text-left mt-4">
+            <button class="btn-back" onclick="goToStep(2)">Back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS Libraries -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const stripe = Stripe("{{ public_key }}");
+
+      function updateSteps(stepNumber) {
+        document.querySelectorAll(".checkout-section").forEach(s => s.classList.remove("active"));
+        document.getElementById(`step-${stepNumber}`).classList.add("active");
+
+        document.querySelectorAll(".step").forEach(step => {
+          const num = parseInt(step.dataset.step);
+          step.classList.remove("active", "completed");
+          if (num < stepNumber) step.classList.add("completed");
+          if (num === stepNumber) step.classList.add("active");
+        });
+      }
+
+      window.goToStep = updateSteps;
+
+      window.validateCustomerForm = function () {
+        const form = document.getElementById("customer-info-form");
+        if (form.checkValidity()) updateSteps(2);
+        else form.reportValidity();
+      };
+
+      window.validateShippingForm = function () {
+        const form = document.getElementById("shipping-address-form");
+        if (form.checkValidity()) updateSteps(3);
+        else form.reportValidity();
+      };
+
+      window.selectAddressType = function (element) {
+        document.querySelectorAll(".address-type").forEach(el => el.classList.remove("selected"));
+        element.classList.add("selected");
+      };
+
+      // Stripe checkout button
+      const checkoutButton = document.getElementById("checkout-button");
+      if (checkoutButton) {
+        checkoutButton.addEventListener("click", function () {
+          const firstName = document.getElementById("firstName").value;
+          const lastName = document.getElementById("lastName").value;
+          const email = document.getElementById("email").value;
+          const phone = document.getElementById("phone").value;
+
+          if (!(firstName && lastName && email && phone)) {
+            alert("Please complete your customer information first.");
+            updateSteps(1);
+            return;
+          }
+
+          stripe.redirectToCheckout({ sessionId: "{{ session_id }}" });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

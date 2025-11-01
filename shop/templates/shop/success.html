@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Confirmed - Shopzy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f3f6f9;
+    }
+    .success-container {
+      max-width: 600px;
+      margin: 100px auto;
+      text-align: center;
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .success-icon {
+      font-size: 70px;
+      color: #28a745;
+      margin-bottom: 20px;
+      animation: bounce 1s;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
+    }
+    h2 {
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    p {
+      font-size: 16px;
+      color: #555;
+    }
+    .btn-home {
+      margin-top: 30px;
+      padding: 12px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      background: linear-gradient(120deg, #6C63FF, #4A40E5);
+      color: #fff;
+      border: none;
+      transition: 0.3s;
+    }
+    .btn-home:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(108,99,255,0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="success-container">
+    <div class="success-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h2>🎉 Order Confirmed!</h2>
+    <p>Thank you for your payment. Your order has been successfully placed and is being processed.</p>
+    <p>We will notify you via email with the order details and tracking information.</p>
+
+{% block body %}
+<div class="container my-5 text-center">
+  <div class="alert alert-success shadow-sm p-4 rounded">
+    <h2 class="mb-3">🎉 Payment Successful!</h2>
+    <p class="lead">Thank you for shopping with <strong>Shopzy</strong>.</p>
+
+    {% if orderId %}
+      <p class="mt-3">
+        Your <strong>Order ID</strong> is:
+        <span class="badge badge-primary">{{ orderId }}</span>
+      </p>
+      <p class="text-muted">
+        Please save this Order ID to track your order status anytime.
+      </p>
+    {% else %}
+      <p class="text-danger">⚠ Order ID could not be found. Please contact support.</p>
+    {% endif %}
+    
+    <a href="{% url 'ShopHome' %}" class="btn btn-success mt-4">Continue Shopping</a>
+    <a href="{% url 'TrackingStatus' %}" class="btn btn-outline-primary mt-4">Track My Order</a>
+  </div>
+</div>
+{% endblock %}
+
+    <a href="/" class="btn-home"><i class="fas fa-home"></i> Back to Home</a>
+  </div>
+
+</body>
+</html>

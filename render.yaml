@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: django-notes-app
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: modelmaker.settings
+      - key: PYTHONUNBUFFERED
+        value: "1"

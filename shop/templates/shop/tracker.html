@@ -1,0 +1,213 @@
+{% extends 'shop/basic.html' %}
+{% block title %}Order Tracker{% endblock %}
+
+{% block body %}
+<style>
+/* ===== Order Tracker Custom CSS ===== */
+.tracker-container {
+  max-width: 900px;
+  margin: 50px auto;
+}
+
+.tracker-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.tracker-steps::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 4px;
+  background-color: #e0e0e0;
+  z-index: 0;
+}
+
+.step {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.step .icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #dee2e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.step.active .icon {
+  background-color: #007bff;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+.step.completed .icon {
+  background-color: #28a745;
+  color: white;
+}
+
+.step span {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* Form Card Styling */
+.card {
+  border-radius: 15px;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #007bff, #0056d2);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #0056d2, #0040a8);
+}
+
+/* Table Styling */
+.table th {
+  background-color: #f8f9fa;
+}
+
+#updates li {
+  border-left: 4px solid #007bff;
+  background: #f1f6ff;
+  margin-bottom: 8px;
+}
+
+.text-danger {
+  background: #ffe6e6 !important;
+  border-left: 4px solid #dc3545 !important;
+}
+</style>
+
+<div class="container tracker-container">
+  <h2 class="mb-4 text-center">🛒 Track Your Order</h2>
+
+  <!-- Step Progress -->
+  <div class="tracker-steps mb-5">
+    <div class="step active" id="step1">
+      <div class="icon"><i class="fas fa-search"></i></div>
+      <span>Enter Details</span>
+    </div>
+    <div class="step" id="step2">
+      <div class="icon"><i class="fas fa-box"></i></div>
+      <span>Order Updates</span>
+    </div>
+    <div class="step" id="step3">
+      <div class="icon"><i class="fas fa-clipboard-list"></i></div>
+      <span>Items Summary</span>
+    </div>
+  </div>
+
+  <!-- Tracking Form -->
+  <div class="card shadow-sm p-4 mb-4">
+    <h5 class="mb-3 text-primary">Enter Your Details</h5>
+    <form id="trackerForm" method="post">
+      {% csrf_token %}
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="orderId" class="form-label">Order ID</label>
+          <input type="text" id="orderId" name="orderId" class="form-control" placeholder="e.g. 12" required>
+        </div>
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="you@example.com" required>
+        </div>
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-primary mt-3 px-5">Track Order</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Order Status and Items -->
+  <div id="statusCard" class="card shadow-sm p-4 d-none">
+    <h4 class="text-primary mb-3"><i class="fas fa-box-open"></i> Order Status</h4>
+    <ul id="updates" class="list-group mb-4"></ul>
+
+    <h4 class="text-primary mb-3"><i class="fas fa-receipt"></i> Order Items</h4>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody id="items"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- FontAwesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<script>
+document.getElementById("trackerForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const response = await fetch("{% url 'TrackingStatus' %}", {
+        method: "POST",
+        body: formData,
+    });
+
+    const data = await response.json();
+    const updatesList = document.getElementById("updates");
+    const itemsTable = document.getElementById("items");
+    const statusCard = document.getElementById("statusCard");
+
+    // Reset
+    updatesList.innerHTML = "";
+    itemsTable.innerHTML = "";
+
+    if (data.status === "success") {
+        // Show status card
+        statusCard.classList.remove("d-none");
+
+        // Step updates
+        document.getElementById("step2").classList.add("active");
+        document.getElementById("step3").classList.add("active");
+
+        // Populate updates
+        data.updates.forEach(update => {
+            const li = document.createElement("li");
+            li.classList.add("list-group-item");
+            li.innerHTML = `<strong>${update.time}</strong> — ${update.text}`;
+            updatesList.appendChild(li);
+        });
+
+        // Populate items
+        const items = JSON.parse(data.items_json);
+        for (let key in items) {
+            const row = `<tr>
+                          <td>${items[key][0]}</td>
+                          <td>${items[key][1]}</td>
+                          <td>₹${items[key][2]}</td>
+                        </tr>`;
+            itemsTable.innerHTML += row;
+        }
+    } else {
+        statusCard.classList.remove("d-none");
+        updatesList.innerHTML = `<li class="list-group-item text-danger text-center">❌ No order found. Please check your details.</li>`;
+    }
+});
+</script>
+{% endblock %}

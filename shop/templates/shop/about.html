@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+      .display-font {
+        font-family: "Playfair Display", serif;
+      }
+      .gradient-bg {
+        background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+      }
+      .gradient-text {
+        background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .floating {
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+      .pattern-bg {
+        background-color: #f9fafb;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5576c' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+    </style>
+  </head>
+  <body class="pattern-bg text-gray-800">
+    <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8 max-w-6xl">
+      <!-- Header Section -->
+      <header class="text-center mb-16">
+        <h1 class="display-font text-4xl md:text-5xl font-bold mb-6">
+          Our <span class="gradient-text">Story</span>
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Discover the passion and purpose behind our brand. We're more than
+          just a store; we're a community dedicated to excellence.
+        </p>
+      </header>
+
+      <!-- Main Content Section: Our Mission -->
+      <section class="grid md:grid-cols-2 gap-12 items-center mb-20">
+        <!-- Image Section -->
+        <div class="order-2 md:order-1 relative">
+          <div
+            class="absolute -inset-3 bg-gradient-to-r from-pink-300 to-purple-300 rounded-2xl transform -rotate-3"
+          ></div>
+          <img
+            src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80"
+            alt="Our team working together"
+            class="relative rounded-xl w-full h-auto shadow-lg"
+          />
+        </div>
+        <!-- Text Content -->
+        <div class="order-1 md:order-2">
+          <h2 class="display-font text-3xl font-bold text-gray-800 mb-6">
+            Our Mission
+          </h2>
+          <p class="text-gray-700 leading-relaxed mb-6">
+            Our journey began with a simple idea: to create exceptional products
+            that enrich everyday life. We believe in quality, sustainability,
+            and thoughtful design. Every item you find on our site is a result
+            of meticulous craftsmanship and a commitment to excellence.
+          </p>
+          <p class="text-gray-700 leading-relaxed mb-6">
+            We are dedicated to building a brand that you can trust and a
+            community you can be proud to be a part of. Thank you for joining us
+            on this adventure.
+          </p>
+          <div class="flex items-center space-x-4 mt-8">
+            <div
+              class="flex items-center justify-center w-12 h-12 rounded-full bg-pink-100 text-pink-600"
+            >
+              <i class="fas fa-heart"></i>
+            </div>
+            <div
+              class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-100 text-purple-600"
+            >
+              <i class="fas fa-star"></i>
+            </div>
+            <div
+              class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 text-blue-600"
+            >
+              <i class="fas fa-hand-holding-heart"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Values Section -->
+      <section class="text-center mb-20">
+        <h2 class="display-font text-3xl font-bold text-gray-800 mb-4">
+          Our Core Values
+        </h2>
+        <p class="text-gray-600 mb-12 max-w-2xl mx-auto">
+          These principles guide everything we do, from product design to
+          customer service
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Value 1 -->
+          <div class="bg-white p-6 rounded-xl card-hover">
+            <div
+              class="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-blue-50 text-blue-600"
+            >
+              <i class="fas fa-lightbulb text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Innovation</h3>
+            <p class="text-gray-600">
+              We constantly seek new ways to improve our products and services,
+              staying ahead of trends while maintaining timeless quality.
+            </p>
+          </div>
+
+          <!-- Value 2 -->
+          <div class="bg-white p-6 rounded-xl card-hover">
+            <div
+              class="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-green-50 text-green-600"
+            >
+              <i class="fas fa-handshake text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Integrity</h3>
+            <p class="text-gray-600">
+              Our business is built on transparency, honesty, and trust. We
+              believe in doing the right thing, even when no one is watching.
+            </p>
+          </div>
+
+          <!-- Value 3 -->
+          <div class="bg-white p-6 rounded-xl card-hover">
+            <div
+              class="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-emerald-50 text-emerald-600"
+            >
+              <i class="fas fa-leaf text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Sustainability</h3>
+            <p class="text-gray-600">
+              We are committed to making eco-conscious choices every step of the
+              way, from sourcing to packaging and beyond.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Team Section -->
+      <section class="mb-16">
+        <h2
+          class="display-font text-3xl font-bold text-center text-gray-800 mb-4"
+        >
+          Meet Our Team
+        </h2>
+        <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+          The passionate people behind our brand's success
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {% for member in team_members %}
+          <div class="text-center bg-white p-6 rounded-xl card-hover">
+            <div
+              class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg"
+            >
+              <img
+                src="{{ member.image.url }}"
+                alt="{{ member.name }}"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3 class="text-lg font-semibold text-pink-600">
+              {{ member.name }}
+            </h3>
+            <p class="text-gray-500 text-sm">{{ member.role }}</p>
+          </div>
+          {% endfor %}
+
+          <!-- Static Members -->
+          <div class="text-center bg-white p-6 rounded-xl card-hover">
+            <div
+              class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+                alt="Sarah Johnson"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3 class="text-lg font-semibold text-pink-600">Sarah Johnson</h3>
+            <p class="text-gray-500 text-sm">Founder & CEO</p>
+          </div>
+
+          <div class="text-center bg-white p-6 rounded-xl card-hover">
+            <div
+              class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+                alt="Emma Rodriguez"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3 class="text-lg font-semibold text-pink-600">Emma Rodriguez</h3>
+            <p class="text-gray-500 text-sm">Head of Design</p>
+          </div>
+
+          <!-- Dynamic Members from Django -->
+          {% for member in team_members %}
+          <div class="text-center bg-white p-6 rounded-xl card-hover">
+            <div
+              class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg"
+            >
+              <img
+                src="{{ member.image.url }}"
+                alt="{{ member.name }}"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3 class="text-lg font-semibold text-pink-600">
+              {{ member.name }}
+            </h3>
+            <p class="text-gray-500 text-sm">{{ member.role }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+
+      <!-- Stats Section -->
+      <section
+        class="bg-gradient-to-r from-pink-500 to-purple-600 rounded-2xl p-8 mb-16 text-white text-center"
+      >
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="p-4">
+            <div
+              class="text-3xl md:text-4xl font-bold mb-2 counter"
+              data-target="10000"
+            >
+              10K+
+            </div>
+            <div class="text-sm md:text-base">Happy Customers</div>
+          </div>
+          <div class="p-4">
+            <div
+              class="text-3xl md:text-4xl font-bold mb-2 counter"
+              data-target="500"
+            >
+              500+
+            </div>
+            <div class="text-sm md:text-base">Products</div>
+          </div>
+          <div class="p-4">
+            <div
+              class="text-3xl md:text-4xl font-bold mb-2 counter"
+              data-target="5"
+            >
+              5+
+            </div>
+            <div class="text-sm md:text-base">Years Experience</div>
+          </div>
+          <div class="p-4">
+            <div
+              class="text-3xl md:text-4xl font-bold mb-2 counter"
+              data-target="24"
+              data-suffix="/7"
+            >
+              24/7
+            </div>
+            <div class="text-sm md:text-base">Support</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Call to Action Section -->
+      <section class="text-center bg-white p-10 rounded-2xl shadow-lg">
+        <h2 class="display-font text-3xl font-bold text-gray-800 mb-4">
+          Join Our Community
+        </h2>
+        <p class="text-gray-700 max-w-2xl mx-auto mb-8">
+          Ready to experience the difference? Explore our collection and find
+          something you'll love.
+        </p>
+        <a
+          href="{% url 'ShopHome' %}"
+          class="inline-block gradient-bg text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+        >
+          <i class="fas fa-shopping-bag mr-2"></i> Shop Now
+        </a>
+
+        <div class="mt-10 flex justify-center space-x-6">
+          <a
+            href="https://github.com/Mahi1120-t"
+            class="text-gray-500 hover:text-pink-600 transition-colors duration-300"
+          >
+            <i class="fab fa-github text-xl"></i>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/mahi-trivedi-3ba654327/"
+            class="text-gray-500 hover:text-pink-600 transition-colors duration-300"
+          >
+            <i class="fab fa-linkedin-in text-xl"></i>
+          </a>
+          <a
+            href="https://instagram.com/_trivedi_1110"
+            class="text-gray-500 hover:text-pink-600 transition-colors duration-300"
+          >
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+          <a
+            href="https://in.pinterest.com/mahitrivedi1120/"
+            class="text-gray-500 hover:text-pink-600 transition-colors duration-300"
+          >
+            <i class="fab fa-pinterest-p text-xl"></i>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // Simple animation for stats counter
+      document.addEventListener("DOMContentLoaded", function () {
+        const counters = document.querySelectorAll("counter");
+        counters.forEach((counter) => {
+          const target = parseInt(counter.getAttribute("data-target"));
+          const suffix = counter.getAttribute("data-suffix") || "+";
+          let count = 0;
+          const increment = target / 50;
+
+          const updateCount = () => {
+            if (count < target) {
+              count += increment;
+              counter.innerText = Math.ceil(count) + suffix;
+              setTimeout(updateCount, 30);
+            } else {
+              counter.innerText = target + suffix;
+            }
+          };
+
+          updateCount();
+        });
+      });
+    </script>
+  </body>
+</html>

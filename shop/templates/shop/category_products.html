@@ -1,0 +1,101 @@
+{% extends 'shop/basic.html' %}
+{% block title %}{{ category }} - Shopzy{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+  <h2 class="mb-4">{{ category }}</h2>
+
+  <div class="row">
+    <!-- Sidebar Filters -->
+    <div class="col-md-3">
+      <form method="get" id="filterForm">
+        <!-- Price Filter -->
+        <div class="filter-section mb-3">
+          <h5>Price</h5>
+          <label><input type="checkbox" name="price" value="0-1000"> ₹0 - ₹1000</label><br>
+          <label><input type="checkbox" name="price" value="1000-2000"> ₹1000 - ₹2000</label><br>
+          <label><input type="checkbox" name="price" value="2000-5000"> ₹2000 - ₹5000</label><br>
+          <label><input type="checkbox" name="price" value="5000+"> ₹5000+</label>
+        </div>
+
+        <!-- Rating Filter -->
+        <div class="filter-section mb-3">
+          <h5>Customer Rating</h5>
+          <label><input type="checkbox" name="rating" value="4"> ⭐⭐⭐⭐ & above</label><br>
+          <label><input type="checkbox" name="rating" value="3"> ⭐⭐⭐ & above</label><br>
+          <label><input type="checkbox" name="rating" value="2"> ⭐⭐ & above</label><br>
+          <label><input type="checkbox" name="rating" value="1"> ⭐ & above</label>
+        </div>
+
+        <!-- Discount Filter -->
+        <div class="filter-section mb-3">
+          <h5>Discount</h5>
+          <label><input type="checkbox" name="discount" value="10"> 10% or more</label><br>
+          <label><input type="checkbox" name="discount" value="20"> 20% or more</label><br>
+          <label><input type="checkbox" name="discount" value="30"> 30% or more</label><br>
+          <label><input type="checkbox" name="discount" value="50"> 50% or more</label>
+        </div>
+
+        <!-- Color Filter -->
+        <div class="filter-section mb-3">
+          <h5>Color</h5>
+          <label>
+            <input type="checkbox" name="color" value="Red">
+            <span style="display:inline-block;width:15px;height:15px;background:red;border:1px solid #000;border-radius:50%;"></span> Red
+          </label><br>
+          <label>
+            <input type="checkbox" name="color" value="Blue">
+            <span style="display:inline-block;width:15px;height:15px;background:blue;border:1px solid #000;border-radius:50%;"></span> Blue
+          </label><br>
+          <label>
+            <input type="checkbox" name="color" value="Black">
+            <span style="display:inline-block;width:15px;height:15px;background:black;border:1px solid #000;border-radius:50%;"></span> Black
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+      </form>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="col-md-9">
+      <div class="row">
+        {% for i in products %}
+          <div class="col-xs-12 col-sm-6 col-md-4 mb-4">
+            <div class="card align-items-center p-2">
+              <div class="product-image-container">
+                <img src="/media/{{ i.image }}" class="card-img-top" alt="{{ i.product_name }}" />
+              </div>
+              <div class="product-info text-center">
+                <h6 class="product-title">{{ i.product_name }}</h6>
+                <p class="text-success font-weight-bold">₹{{ i.price }}</p>
+
+                {% if i.discount %}
+                  <p class="text-danger">-{{ i.discount }}% Off</p>
+                {% endif %}
+
+                {% if i.rating %}
+                  <p>
+                    {% for s in "12345"|slice:":i.rating"|make_list %}
+                      ⭐
+                    {% endfor %}
+                  </p>
+                {% endif %}
+
+                <span id="divpr{{ i.id }}">
+                  <a href="{% url 'add-to-cart' i.id %}" class="btn btn-primary">Add to Cart</a>
+                  <a href="/shop/products/{{ i.id }}">
+
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <p>No products found with selected filters.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
