@@ -6,7 +6,6 @@
       <style type="text/css">body {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 12px;
-  /* do not increase min-width as some may use split screens */
   min-width: 800px;
   color: #999;
 }
@@ -33,9 +32,6 @@ table {
   border-collapse: collapse;
 }
 
-/******************************
- * SUMMARY INFORMATION
- ******************************/
 #environment td {
   padding: 5px;
   border: 1px solid #e6e6e6;
@@ -49,9 +45,6 @@ table {
   padding: 0 20px;
 }
 
-/******************************
- * TEST RESULT COLORS
- ******************************/
 span.passed,
 .passed .col-result {
   color: green;
@@ -78,18 +71,7 @@ span.xpassed,
 .col-links__extra {
   margin-right: 3px;
 }
-
-/******************************
- * RESULTS TABLE
- *
- * 1. Table Layout
- * 2. Extra
- * 3. Sorting items
- *
- ******************************/
-/*------------------
- * 1. Table Layout
- *------------------*/
+        
 #results-table {
   border: 1px solid #e6e6e6;
   color: #999;
@@ -106,9 +88,6 @@ span.xpassed,
   font-weight: bold;
 }
 
-/*------------------
- * 2. Extra
- *------------------*/
 .logwrapper {
   max-height: 230px;
   overflow-y: scroll;
@@ -238,9 +217,6 @@ div.media {
   font-size: 12px;
 }
 
-/*------------------
- * 3. Sorting items
- *------------------*/
 .sortable {
   cursor: pointer;
 }
@@ -334,7 +310,7 @@ div.media {
       <h2>Environment</h2>
     </div>
     <table id="environment"></table>
-    <!-- TEMPLATES -->
+
       <template id="template_environment_row">
       <tr>
         <td></td>
@@ -376,7 +352,7 @@ div.media {
         </tr>
       </tbody>
     </template>
-    <!-- END TEMPLATES -->
+
     <div class="summary">
       <div class="summary__data">
         <h2>Summary</h2>
@@ -549,7 +525,6 @@ const dom = {
         })
 
         if (log) {
-            // Wrap lines starting with "E" with span.error to color those lines red
             const wrappedLog = log.replace(/^E.*$/gm, (match) => `<span class="error">${match}</span>`)
             resultBody.querySelector('.log').innerHTML = wrappedLog
         } else {
@@ -574,8 +549,6 @@ const dom = {
             }
         })
         mediaViewer.setup(resultBody, media)
-
-        // Add custom html from the pytest_html_results_table_html hook
         tableHtml?.forEach((item) => {
             resultBody.querySelector('td[class="extra"]').insertAdjacentHTML('beforeend', item)
         })
@@ -701,7 +674,6 @@ const renderContent = (tests) => {
     const newTable = document.createElement('table')
     newTable.id = 'results-table'
 
-    // remove all sorting classes and set the relevant
     findAll('.sortable', tableHeader).forEach((elem) => elem.classList.remove('asc', 'desc'))
     tableHeader.querySelector(`.sortable[data-column-type="${sortAttr}"]`)?.classList.add(sortAsc ? 'desc' : 'asc')
     newTable.appendChild(tableHeader)
@@ -894,7 +866,6 @@ const genericSort = (list, key, ascending, customOrder) => {
             const aIndex = customOrder.findIndex((item) => item.toLowerCase() === aValue)
             const bIndex = customOrder.findIndex((item) => item.toLowerCase() === bValue)
 
-            // Compare the indices to determine the sort order
             return aIndex - bIndex
         })
     } else {
@@ -910,11 +881,11 @@ const genericSort = (list, key, ascending, customOrder) => {
 const durationSort = (list, ascending) => {
     const parseDuration = (duration) => {
         if (duration.includes(':')) {
-            // If it's in the format "HH:mm:ss"
+         
             const [hours, minutes, seconds] = duration.split(':').map(Number)
             return (hours * 3600 + minutes * 60 + seconds) * 1000
         } else {
-            // If it's in the format "nnn ms"
+         
             return parseInt(duration)
         }
     }
@@ -1088,4 +1059,5 @@ module.exports = {
 },{}]},{},[4]);
     </script>
   </footer>
+
 </html>
