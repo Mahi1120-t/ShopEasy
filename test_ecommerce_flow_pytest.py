@@ -1,9 +1,3 @@
-# test_ecommerce_flow_pytest.py
-# -----------------------------------------
-# Automated E-commerce flow testing using PyTest + Selenium
-# Generates screenshots and an HTML report
-# -----------------------------------------
-
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -13,7 +7,6 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
 
-# ========== FIXTURE ==========
 @pytest.fixture
 def driver():
     """Setup Chrome driver"""
@@ -22,7 +15,7 @@ def driver():
     yield driver
     driver.quit()
 
-# ========== TEST 1: FULL E-COMMERCE FLOW ==========
+# FULL E-COMMERCE FLOW 
 def test_ecommerce_flow(driver):
     os.makedirs("reports", exist_ok=True)
     driver.get("http://127.0.0.1:8000/")
@@ -35,7 +28,7 @@ def test_ecommerce_flow(driver):
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "img")))
     driver.save_screenshot("reports/2_search_results.png")
 
-    # Step 2: Add to Cart
+    # Add to Cart
     try:
         add_to_cart = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Add to Cart"))
@@ -46,7 +39,7 @@ def test_ecommerce_flow(driver):
     time.sleep(2)
     driver.save_screenshot("reports/3_added_to_cart.png")
 
-    # Step 3: Open Cart
+    # Open Cart
     try:
         cart_link = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.ID, "cart-link"))
@@ -67,7 +60,7 @@ def test_ecommerce_flow(driver):
 
     assert len(items) > 0, "❌ Cart is empty after adding a product!"
 
-    # Step 4: Proceed to Checkout
+    # Proceed to Checkout
     try:
         checkout_btn = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Checkout"))
@@ -78,10 +71,10 @@ def test_ecommerce_flow(driver):
     time.sleep(2)
     driver.save_screenshot("reports/5_checkout.png")
 
-    # Step 5: Verify checkout page
+    #  Verify checkout page
     assert "checkout" in driver.current_url.lower(), "Checkout page did not load properly."
 
-# ========== TEST 2: SEARCH FUNCTIONALITY ==========
+#  SEARCH FUNCTIONALITY 
 def test_search_results(driver):
     os.makedirs("reports", exist_ok=True)
     driver.get("http://127.0.0.1:8000/")
@@ -107,7 +100,7 @@ def test_search_results(driver):
     page_source = driver.page_source.lower()
     assert "no" in page_source or "not found" in page_source, "❌ Invalid search did not show 'no results' message!"
 
-# ========== TEST 3: ADD TO CART FUNCTIONALITY ==========
+#ADD TO CART FUNCTIONALITY
 def test_add_to_cart(driver):
     os.makedirs("reports", exist_ok=True)
     driver.get("http://127.0.0.1:8000/")
@@ -140,8 +133,9 @@ def test_add_to_cart(driver):
 
     assert len(items) > 0, "❌ Cart is empty after adding a product!"
 
-# ========== TEST 4: PAGE TITLE CHECK ==========
+#  PAGE TITLE CHECK
 def test_homepage_title(driver):
     driver.get("http://127.0.0.1:8000/")
     driver.save_screenshot("reports/homepage_title.png")
     assert "shop" in driver.title.lower() or "ecom" in driver.title.lower(), "❌ Homepage title does not look correct."
+
