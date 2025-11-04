@@ -247,14 +247,13 @@ def buy_now(request, product_id):
 
 
 def category_products(request, category_name):
-    # Base queryset
     products = Product.objects.filter(category__iexact=category_name)
 
     # --- Filters ---
-    prices = request.GET.getlist("price")       # e.g., ["0-1000", "1000-2000"]
-    discounts = request.GET.getlist("discount") # e.g., ["10", "20"]
-    ratings = request.GET.getlist("rating")     # e.g., ["4", "3"]
-    color = request.GET.get("color")            # e.g., "Red"
+    prices = request.GET.getlist("price")      
+    discounts = request.GET.getlist("discount")
+    ratings = request.GET.getlist("rating")    
+    color = request.GET.get("color")           
 
     # ---- Price Filter ----
     if prices:
