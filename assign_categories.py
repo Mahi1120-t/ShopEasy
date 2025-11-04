@@ -2,13 +2,11 @@ import os
 import django
 from collections import defaultdict
 
-# Setup Django environment
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Ecom.settings')
 django.setup()
 
 from shop.models import Product
 
-# Define categories and keywords
 categories = {
     'groceries': ['rice', 'wheat', 'milk', 'oil'],
     'mobiles': ['phone', 'mobile', 'samsung', 'iphone'],
@@ -19,10 +17,8 @@ categories = {
     'toys & more': ['toy', 'puzzle', 'game', 'lego']
 }
 
-# Dictionary to keep count
 category_count = defaultdict(int)
 
-# Assign categories
 for product in Product.objects.all():
     assigned = False
     name_lower = product.product_name.lower()
@@ -38,7 +34,6 @@ for product in Product.objects.all():
         product.save()
         category_count['others'] += 1
 
-# Print summary
 print("Category assignment complete!\nSummary:")
 for cat, count in category_count.items():
     print(f"{cat}: {count} products")
