@@ -13,9 +13,6 @@ urlpatterns = [
     path("payment_success/", views.payment_success, name="payment_success"),
     path("payment_cancel/", views.payment_failed, name="payment_failed"),
     path('category/<str:category_name>/', views.category_products, name='category_products'),
-
-
-    # Session-based cart URLs
     path("cart/", views.cart_view, name="cart"),
     path("cart-count/", views.cart_count, name="cart_count"),
     path("add-to-cart/<int:product_id>/", views.add_to_cart, name="add-to-cart"),
