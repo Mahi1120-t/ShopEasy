@@ -20,7 +20,7 @@
     <style>
       .product-image-container {
         width: 100%;
-        height: 250px; /* Fixed height for uniformity */
+        height: 250px; 
         background-color: #f9f9f9;
         display: flex;
         justify-content: center;
@@ -31,7 +31,7 @@
         height: 100%;
         width: auto;
         object-fit: contain;
-      } /* Optional: Set all cards to same height */
+      } 
       .add-to-cart-btn {
         margin-right: 8px;
         flex: 0;
@@ -50,7 +50,7 @@
         font-weight: bold;
       }
       .product-info {
-        height: 200px !important; /* Fixed height for info section */
+        height: 200px !important; 
         padding: 15px;
         display: flex;
         flex-direction: column;
@@ -82,10 +82,10 @@
       }
       .carousel-indicators {
         bottom: 0;
-      } /* Ensure all carousel items have consistent height */
+      } 
       .carousel-inner .carousel-item {
         min-height: 100%;
-      } /* Align control buttons (prev/next) vertically with cards */
+      } 
       .carousel-control-prev,
       .carousel-control-next {
         top: 40%;
@@ -214,7 +214,7 @@
       }
       .navbar-toggler:focus {
         outline: none;
-      } /* Responsive adjustments */
+      } 
       @media (max-width: 992px) {
         .search-form {
           width: 100%;
@@ -304,7 +304,6 @@
       integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
       crossorigin="anonymous"
     ></script>
-    <!-- call after you get payment success and have target info -->
 
     {% block js %} {% endblock %}
   </body>
