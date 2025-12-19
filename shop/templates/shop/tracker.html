@@ -3,7 +3,6 @@
 
 {% block body %}
 <style>
-/* ===== Order Tracker Custom CSS ===== */
 .tracker-container {
   max-width: 900px;
   margin: 50px auto;
@@ -62,7 +61,6 @@
   font-size: 14px;
 }
 
-/* Form Card Styling */
 .card {
   border-radius: 15px;
   border: none;
@@ -78,7 +76,6 @@
   background: linear-gradient(90deg, #0056d2, #0040a8);
 }
 
-/* Table Styling */
 .table th {
   background-color: #f8f9fa;
 }
@@ -98,7 +95,6 @@
 <div class="container tracker-container">
   <h2 class="mb-4 text-center">🛒 Track Your Order</h2>
 
-  <!-- Step Progress -->
   <div class="tracker-steps mb-5">
     <div class="step active" id="step1">
       <div class="icon"><i class="fas fa-search"></i></div>
@@ -135,7 +131,6 @@
     </form>
   </div>
 
-  <!-- Order Status and Items -->
   <div id="statusCard" class="card shadow-sm p-4 d-none">
     <h4 class="text-primary mb-3"><i class="fas fa-box-open"></i> Order Status</h4>
     <ul id="updates" class="list-group mb-4"></ul>
@@ -156,7 +151,6 @@
   </div>
 </div>
 
-<!-- FontAwesome -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 <script>
@@ -174,27 +168,20 @@ document.getElementById("trackerForm").addEventListener("submit", async function
     const itemsTable = document.getElementById("items");
     const statusCard = document.getElementById("statusCard");
 
-    // Reset
     updatesList.innerHTML = "";
     itemsTable.innerHTML = "";
 
     if (data.status === "success") {
-        // Show status card
         statusCard.classList.remove("d-none");
-
-        // Step updates
         document.getElementById("step2").classList.add("active");
         document.getElementById("step3").classList.add("active");
 
-        // Populate updates
         data.updates.forEach(update => {
             const li = document.createElement("li");
             li.classList.add("list-group-item");
             li.innerHTML = `<strong>${update.time}</strong> — ${update.text}`;
             updatesList.appendChild(li);
         });
-
-        // Populate items
         const items = JSON.parse(data.items_json);
         for (let key in items) {
             const row = `<tr>

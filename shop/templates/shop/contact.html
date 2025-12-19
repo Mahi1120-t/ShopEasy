@@ -5,16 +5,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Us</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
-    <!-- Font Awesome -->
+    
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -54,7 +53,7 @@
   </head>
   <body class="pattern-bg text-gray-800 min-h-screen">
     <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8 max-w-6xl">
-      <!-- Header Section -->
+      
       <header class="text-center mb-16">
         <h1 class="display-font text-4xl md:text-5xl font-bold mb-6">
           Get In <span class="gradient-text">Touch</span>
@@ -315,7 +314,7 @@
     </div>
 
     <script>
-      // Simple form validation
+      // Form validation
       document.addEventListener("DOMContentLoaded", function () {
         const form = document.querySelector("form");
 
@@ -328,7 +327,7 @@
           const message = document.getElementById("message").value;
 
           if (name && email && subject && message) {
-            // Simulate form submission success
+            
             alert("Thank you for your message! We will get back to you soon.");
             form.reset();
           } else {
