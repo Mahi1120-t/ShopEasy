@@ -19,6 +19,5 @@ urlpatterns = [
     path("remove-from-cart/<int:product_id>/", views.remove_from_cart, name="RemoveFromCart"),
     path("increase/<int:product_id>/", views.increase_quantity, name="IncreaseQty"),
     path("decrease/<int:product_id>/", views.decrease_quantity, name="DecreaseQty"),
-<<<<<<< HEAD
 ]  
->>>>>>> 727ff3c455944ac64a3e4bbb9d1016c49d27da25
+
