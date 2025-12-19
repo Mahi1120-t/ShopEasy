@@ -68,29 +68,32 @@
     <p>Thank you for your payment. Your order has been successfully placed and is being processed.</p>
     <p>We will notify you via email with the order details and tracking information.</p>
 
-{% block body %}
-<div class="container my-5 text-center">
-  <div class="alert alert-success shadow-sm p-4 rounded">
-    <h2 class="mb-3">🎉 Payment Successful!</h2>
-    <p class="lead">Thank you for shopping with <strong>Shopzy</strong>.</p>
+    <!-- Main Content Area - Removed duplicate block tag -->
+    <div class="container my-5 text-center">
+      <div class="alert alert-success shadow-sm p-4 rounded">
+        <h2>Payment Successful!</h2>
+        <p>Thank you <strong>{{ order.name }}</strong> for your order.</p>
+        <p>Order ID: <span class="badge badge-primary">{{ order.id }}</span></p>
+        <p>A confirmation email has been sent to <strong>{{ order.email }}</strong>.</p>
 
-    {% if orderId %}
-      <p class="mt-3">
-        Your <strong>Order ID</strong> is:
-        <span class="badge badge-primary">{{ orderId }}</span>
-      </p>
-      <p class="text-muted">
-        Please save this Order ID to track your order status anytime.
-      </p>
-    {% else %}
-      <p class="text-danger">⚠ Order ID could not be found. Please contact support.</p>
-    {% endif %}
-    
-    <a href="{% url 'ShopHome' %}" class="btn btn-success mt-4">Continue Shopping</a>
-    <a href="{% url 'TrackingStatus' %}" class="btn btn-outline-primary mt-4">Track My Order</a>
-  </div>
-</div>
-{% endblock %}
+        {% if order.id %}
+          <p class="mt-3">
+            Your <strong>Order ID</strong> is:
+            <span class="badge badge-primary">{{ order.id }}</span>
+          </p>
+          <p class="text-muted">
+            Please save this Order ID to track your order status anytime.
+          </p>
+        {% else %}
+          <p class="text-danger">⚠ Order ID could not be found. Please contact support.</p>
+        {% endif %}
+        
+        <div class="mt-4">
+          <a href="{% url 'ShopHome' %}" class="btn btn-success">Continue Shopping</a>
+          <a href="{% url 'TrackingStatus' %}" class="btn btn-outline-primary">Track My Order</a>
+        </div>
+      </div>
+    </div>
 
     <a href="/" class="btn-home"><i class="fas fa-home"></i> Back to Home</a>
   </div>

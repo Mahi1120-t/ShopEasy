@@ -8,7 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 import json
 from decimal import Decimal, ROUND_HALF_UP
-
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib import messages
 
 # ----------------- Home Page -----------------
 def index(request):
@@ -50,15 +52,37 @@ def contact(request):
 @csrf_exempt
 def tracker(request):
     if request.method == "POST":
-        orderId = request.POST.get("orderId")
-        email = request.POST.get("email")
+        orderId = request.POST.get("orderId", "").strip()
+        email = request.POST.get("email", "").strip().lower()
+        
         try:
-            order = Order.objects.get(id=orderId, email=email)
-            updates = OrderUpdate.objects.filter(order=order)
-            updates_list = [{"text": u.update_desc, "time": u.timestamp.strftime("%d-%m-%Y %H:%M")} for u in updates]
-            return JsonResponse({"status": "success", "updates": updates_list, "items_json": order.items_json})
+            order = Order.objects.get(id=orderId, email__iexact=email)
+            updates = OrderUpdate.objects.filter(order=order).order_by('timestamp')
+            
+            updates_list = []
+            for u in updates:
+                updates_list.append({
+                    "text": u.update_desc, 
+                    "time": u.timestamp.strftime("%d-%m-%Y %H:%M:%S")
+                })
+            
+            return JsonResponse({
+                "status": "success", 
+                "updates": updates_list, 
+                "items_json": order.items_json
+            })
+            
         except Order.DoesNotExist:
-            return JsonResponse({"status": "no order"})
+            return JsonResponse({
+                "status": "error",
+                "message": "No order found with these details. Please check your Order ID and Email."
+            })
+        except Exception as e:
+            return JsonResponse({
+                "status": "error", 
+                "message": f"An error occurred: {str(e)}"
+            })
+    
     return render(request, "shop/tracker.html")
 
 
@@ -201,21 +225,33 @@ def checkout(request):
     for item in cart_items:
         price = int(Decimal(str(item["product"].price)) * 100)
         line_items.append({
-            "price_data": {"currency": "inr", "product_data": {"name": item["product"].product_name}, "unit_amount": price},
+            "price_data": {
+                "currency": "inr", 
+                "product_data": {"name": item["product"].product_name}, 
+                "unit_amount": price
+            },
             "quantity": item["quantity"]
         })
     if shipping > 0:
         line_items.append({
-            "price_data": {"currency": "inr", "product_data": {"name": "Shipping"}, "unit_amount": int(shipping*100)},
+            "price_data": {
+                "currency": "inr", 
+                "product_data": {"name": "Shipping"}, 
+                "unit_amount": int(shipping*100)
+            },
             "quantity": 1
         })
+
+    # Use request.build_absolute_uri for dynamic URLs
+    success_url = request.build_absolute_uri('/shop/payment_success/') + f'?order_id={order.id}'
+    cancel_url = request.build_absolute_uri('/shop/payment_cancel/')
 
     session = stripe.checkout.Session.create(
         payment_method_types=['card'],
         line_items=line_items,
         mode='payment',
-        success_url="http://127.0.0.1:8000/shop/payment_success/",
-        cancel_url="http://127.0.0.1:8000/shop/payment_cancel/"
+        success_url=success_url,
+        cancel_url=cancel_url
     )
 
     return render(request, "shop/checkout.html", {
@@ -229,11 +265,61 @@ def checkout(request):
         "orderId": order.id
     })
 
-
 def payment_success(request):
-    order = Order.objects.last()
-    return render(request, "shop/success.html", {"orderId": order.id if order else None})
+    order_id = request.GET.get('order_id')
+    if not order_id:
+        messages.error(request, "Order ID missing.")
+        return redirect('ShopHome')
 
+    try:
+        order = Order.objects.get(id=order_id)
+        customer_email = order.email  # This should be the customer's email
+        
+        print(f"Sending email to: {customer_email}")  # Debug line
+        
+        # Send confirmation email to CUSTOMER
+        subject = f'Order Confirmation - Order #{order.id} - Shopzy'
+        message = f"""
+Dear {order.name},
+
+Thank you for your order! Your payment was successful and your order has been confirmed.
+
+Order Details:
+- Order ID: {order.id}
+- Amount: ₹{order.amount}
+- Shipping Address: {order.address}, {order.city}, {order.state} - {order.zip_code}
+- Phone: {order.phone}
+
+We will notify you when your order ships. You can track your order status anytime using your Order ID and email.
+
+Thank you for shopping with us!
+
+Best regards,
+Shopzy Team
+        """
+        
+        # Send email to CUSTOMER
+        send_mail(
+            subject,
+            message.strip(),
+            settings.DEFAULT_FROM_EMAIL,  # From address (your shop email)
+            [customer_email],  # TO: Customer's email address
+            fail_silently=False,
+        )
+        
+        print(f"Email sent successfully to {customer_email}")  # Debug line
+        
+        # Clear cart session after success
+        if 'cart' in request.session:
+            del request.session['cart']
+            
+    except Order.DoesNotExist:
+        messages.error(request, "Order not found.")
+        return redirect('ShopHome')
+    except Exception as e:
+        print(f"Email sending failed: {e}")  # Debug line
+
+    return render(request, 'shop/success.html', {'order': order})
 
 def payment_failed(request):
     return render(request, "shop/failed.html")

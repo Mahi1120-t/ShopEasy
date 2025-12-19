@@ -1,36 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils import timezone
-import hashlib
-import secrets
-
-
-def hash_otp(otp:str, salt: str) -> str:
-    return hashlib.sha256(f"{salt}{otp}" .encode()).hexdigest()
-
-class OTPRequest(models.Model):
-    TARGET_TYPE_CHOICES = (('email', 'email'), ('phone', 'phone'))
-
-    target_type = models.CharField(max_length=10, choices=TARGET_TYPE_CHOICES)
-    target_value = models.CharField(max_length=255)
-    salt = models.CharField(max_length=32)
-    otp_hash = models.CharField(max_length=64)
-    created_at = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField()
-    attempts = models.IntegerField(default=0)
-    verified = models.BooleanField(default=False)
-    meta =models.JSONField(blank=True, null=True)
-
-    def set_otp(self, otp_plain: str, valid_seconds: int = 300):
-        self.salt = secrets.token_hex(16)
-        self.otp_hash = hash_otp(otp_plain, self.salt)
-        self.expires_at = timezone.now() + timezone.timedelta(seconds=valid_seconds)
-
-    def check_otp(self, otp_plain: str):
-        return self.otp_hash == hash_otp(otp_plain, self.salt)
-    
-    def is_expired(self):
-        return timezone.now() > self.expires_at
 
 
 # Create your models here.
@@ -110,7 +79,7 @@ class Order(models.Model):
     
 
     def __str__(self):
-        return f"Order {self.id} by {self.name}"
+        return f"Order {self.id} by {self.name} - {self.email}"
 
 
 class OrderUpdate(models.Model):

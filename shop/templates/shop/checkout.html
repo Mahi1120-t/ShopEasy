@@ -184,6 +184,11 @@
       color: #fff;
     }
 
+    .form-text {
+      font-size: 12px;
+      color: #6c757d;
+    }
+
   </style>
 </head>
 
@@ -211,23 +216,25 @@
         <div class="card-header"><i class="fas fa-user"></i> Customer Information</div>
         <div class="card-body">
           <form id="customer-info-form">
+            {% csrf_token %}
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label for="firstName">First Name</label>
-                <input type="text" id="firstName" class="form-control" required />
+                <label for="firstName">First Name *</label>
+                <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Enter your first name" required />
               </div>
               <div class="col-md-6 mb-3">
-                <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" class="form-control" required />
+                <label for="lastName">Last Name *</label>
+                <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Enter your last name" required />
               </div>
             </div>
             <div class="form-group mb-3">
-              <label for="email">Email</label>
-              <input type="email" id="email" class="form-control" required />
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+              <small class="form-text text-muted">Order confirmation will be sent to this email</small>
             </div>
             <div class="form-group mb-3">
-              <label for="phone">Phone</label>
-              <input type="tel" id="phone" class="form-control" required />
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required />
             </div>
           </form>
           <div class="text-right">
@@ -250,25 +257,25 @@
 
           <form id="shipping-address-form">
             <div class="form-group mb-3">
-              <label for="fullName">Full Name</label>
-              <input type="text" id="fullName" class="form-control" required />
+              <label for="fullName">Full Name *</label>
+              <input type="text" id="fullName" class="form-control" placeholder="Enter full name" required />
             </div>
             <div class="form-group mb-3">
-              <label for="addressLine1">Address Line 1</label>
-              <input type="text" id="addressLine1" class="form-control" required />
+              <label for="addressLine1">Address Line 1 *</label>
+              <input type="text" id="addressLine1" class="form-control" placeholder="Enter street address" required />
             </div>
             <div class="form-group mb-3">
-              <label for="city">City</label>
-              <input type="text" id="city" class="form-control" required />
+              <label for="city">City *</label>
+              <input type="text" id="city" class="form-control" placeholder="Enter city" required />
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label for="state">State</label>
-                <input type="text" id="state" class="form-control" required />
+                <label for="state">State *</label>
+                <input type="text" id="state" class="form-control" placeholder="Enter state" required />
               </div>
               <div class="col-md-6 mb-3">
-                <label for="zipCode">Zip Code</label>
-                <input type="text" id="zipCode" class="form-control" required />
+                <label for="zipCode">Zip Code *</label>
+                <input type="text" id="zipCode" class="form-control" placeholder="Enter zip code" required />
               </div>
             </div>
           </form>
@@ -303,7 +310,7 @@
   </div>
 
   <!-- JS Libraries -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://js.stripe.com/v3/"></script>
@@ -311,6 +318,9 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const stripe = Stripe("{{ public_key }}");
+
+      // Store customer data
+      let customerData = {};
 
       function updateSteps(stepNumber) {
         document.querySelectorAll(".checkout-section").forEach(s => s.classList.remove("active"));
@@ -328,14 +338,38 @@
 
       window.validateCustomerForm = function () {
         const form = document.getElementById("customer-info-form");
-        if (form.checkValidity()) updateSteps(2);
-        else form.reportValidity();
+        
+        if (form.checkValidity()) {
+          // Store customer data
+          customerData = {
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value
+          };
+          
+          // Auto-fill shipping name
+          document.getElementById("fullName").value = `${customerData.firstName} ${customerData.lastName}`;
+          
+          updateSteps(2);
+        } else {
+          form.reportValidity();
+        }
       };
 
       window.validateShippingForm = function () {
         const form = document.getElementById("shipping-address-form");
-        if (form.checkValidity()) updateSteps(3);
-        else form.reportValidity();
+        if (form.checkValidity()) {
+          // Submit customer data to server first
+          submitCustomerData().then(() => {
+            updateSteps(3);
+          }).catch(error => {
+            console.error('Error submitting customer data:', error);
+            alert('Error saving your information. Please try again.');
+          });
+        } else {
+          form.reportValidity();
+        }
       };
 
       window.selectAddressType = function (element) {
@@ -343,22 +377,62 @@
         element.classList.add("selected");
       };
 
+      // Function to submit customer data to server
+      function submitCustomerData() {
+        return new Promise((resolve, reject) => {
+          const formData = new FormData();
+          formData.append('firstName', customerData.firstName);
+          formData.append('lastName', customerData.lastName);
+          formData.append('email', customerData.email);
+          formData.append('phone', customerData.phone);
+          formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+          fetch(window.location.href, {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => {
+            if (response.ok) {
+              resolve();
+            } else {
+              reject('Server error');
+            }
+          })
+          .catch(error => reject(error));
+        });
+      }
+
       // Stripe checkout button
       const checkoutButton = document.getElementById("checkout-button");
       if (checkoutButton) {
         checkoutButton.addEventListener("click", function () {
-          const firstName = document.getElementById("firstName").value;
-          const lastName = document.getElementById("lastName").value;
-          const email = document.getElementById("email").value;
-          const phone = document.getElementById("phone").value;
-
-          if (!(firstName && lastName && email && phone)) {
+          // Validate all forms before proceeding to payment
+          const customerForm = document.getElementById("customer-info-form");
+          const shippingForm = document.getElementById("shipping-address-form");
+          
+          if (!customerForm.checkValidity()) {
             alert("Please complete your customer information first.");
             updateSteps(1);
+            customerForm.reportValidity();
+            return;
+          }
+          
+          if (!shippingForm.checkValidity()) {
+            alert("Please complete your shipping address first.");
+            updateSteps(2);
+            shippingForm.reportValidity();
             return;
           }
 
-          stripe.redirectToCheckout({ sessionId: "{{ session_id }}" });
+          // All forms are valid, proceed with Stripe checkout
+          stripe.redirectToCheckout({ 
+            sessionId: "{{ session_id }}" 
+          }).then(function(result) {
+            // If redirect fails, show error
+            if (result.error) {
+              alert("Payment failed: " + result.error.message);
+            }
+          });
         });
       }
     });
