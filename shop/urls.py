@@ -21,6 +21,4 @@ urlpatterns = [
     path("decrease/<int:product_id>/", views.decrease_quantity, name="DecreaseQty"),
 <<<<<<< HEAD
 ]  
-=======
-]
 >>>>>>> 727ff3c455944ac64a3e4bbb9d1016c49d27da25
